@@ -192,15 +192,16 @@ $(document).ready(function () {
                         type: "DELETE",
                         success: function (response) {
                             if (response.status === "success") {
-                                Swal.fire({
-                                    title: "Deleted!",
-                                    text: "Todo has been deleted.",
-                                    icon: "success",
-                                    timer: 1500,
-                                });
-
                                 if (response.todo) {
-                                    $(`#todo_${response.todo.id}`).remove();
+                                    const rowIndex = dataTable.row($(`#todo_${response.todo.id}`)).index();
+                                    dataTable.row(rowIndex).remove().draw();
+    
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: "Todo has been deleted.",
+                                        icon: "success",
+                                        timer: 1500,
+                                    });
                                 }
                             } else {
                                 Swal.fire({
